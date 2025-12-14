@@ -6,8 +6,10 @@ const AIRPORTS = {
     XFW: { lat: 53.2253, lng: 10.3858, name: 'Hamburg-Finkenwerder' }
 };
 
-// ==================== BLUEPRINTS SVG ====================
+
+// ==================== BLUEPRINTS SVG (ACTUALIZADOS) ====================
 const BLUEPRINTS = {
+    // 1. HORIZONTAL TAIL PLANE (Basado en la imagen)
     htp: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <pattern id="grid-htp" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -15,20 +17,22 @@ const BLUEPRINTS = {
             </pattern>
         </defs>
         <rect width="200" height="100" fill="url(#grid-htp)"/>
-        <!-- Horizontal Tail Plane -->
-        <path d="M 40 50 L 100 30 L 160 50 L 100 70 Z" fill="none" stroke="#4aa3ff" stroke-width="2"/>
-        <line x1="100" y1="30" x2="100" y2="70" stroke="#4aa3ff" stroke-width="1.5" stroke-dasharray="3,2"/>
-        <circle cx="100" cy="50" r="3" fill="#4aff9d"/>
-        <!-- Dimensiones -->
-        <line x1="40" y1="80" x2="160" y2="80" stroke="#8fb5ff" stroke-width="0.5"/>
-        <line x1="40" y1="75" x2="40" y2="85" stroke="#8fb5ff" stroke-width="0.5"/>
-        <line x1="160" y1="75" x2="160" y2="85" stroke="#8fb5ff" stroke-width="0.5"/>
+        <path d="M 30 50 L 170 40 Q 180 50, 170 60 L 30 50" fill="none" stroke="#4aa3ff" stroke-width="2"/>
+        <line x1="30" y1="50" x2="170" y2="50" stroke="#8fb5ff" stroke-width="0.5" stroke-dasharray="4,2"/>
+        <line x1="50" y1="48" x2="50" y2="52" stroke="#8fb5ff" stroke-width="1"/>
+        <line x1="80" y1="46" x2="80" y2="54" stroke="#8fb5ff" stroke-width="1"/>
+        <line x1="110" y1="44" x2="110" y2="56" stroke="#8fb5ff" stroke-width="1"/>
+        <line x1="140" y1="42" x2="140" y2="58" stroke="#8fb5ff" stroke-width="1"/>
+        <circle cx="30" cy="50" r="3" fill="#4aff9d"/>
+        <line x1="30" y1="80" x2="170" y2="80" stroke="#8fb5ff" stroke-width="0.5"/>
+        <line x1="30" y1="75" x2="30" y2="85" stroke="#8fb5ff" stroke-width="0.5"/>
+        <line x1="170" y1="75" x2="170" y2="85" stroke="#8fb5ff" stroke-width="0.5"/>
         <text x="100" y="92" text-anchor="middle" fill="#8fb5ff" font-size="8" font-family="monospace">18.0m</text>
-        <!-- Anotaciones -->
         <text x="10" y="15" fill="#4aff9d" font-size="6" font-family="monospace">HTP</text>
         <text x="10" y="22" fill="#8fb5ff" font-size="5" font-family="monospace">A350</text>
     </svg>`,
     
+    // 2. SECTION 19 (Basado en la imagen de un segmento de fuselaje)
     sec19: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <pattern id="grid-sec19" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -36,24 +40,20 @@ const BLUEPRINTS = {
             </pattern>
         </defs>
         <rect width="200" height="100" fill="url(#grid-sec19)"/>
-        <!-- Section 19 Fuselage -->
-        <ellipse cx="100" cy="50" rx="60" ry="20" fill="none" stroke="#4aa3ff" stroke-width="2"/>
-        <line x1="40" y1="50" x2="160" y2="50" stroke="#4aa3ff" stroke-width="1.5"/>
-        <rect x="70" y="40" width="60" height="20" fill="none" stroke="#4aa3ff" stroke-width="1" stroke-dasharray="2,2"/>
+        <rect x="40" y="25" width="120" height="50" rx="10" ry="10" fill="none" stroke="#4aa3ff" stroke-width="2"/>
+        <line x1="50" y1="25" x2="50" y2="75" stroke="#8fb5ff" stroke-width="0.8" opacity="0.6"/>
+        <line x1="80" y1="25" x2="80" y2="75" stroke="#8fb5ff" stroke-width="0.8" opacity="0.6"/>
+        <line x1="110" y1="25" x2="110" y2="75" stroke="#8fb5ff" stroke-width="0.8" opacity="0.6"/>
+        <line x1="140" y1="25" x2="140" y2="75" stroke="#8fb5ff" stroke-width="0.8" opacity="0.6"/>
+        <rect x="90" y="40" width="20" height="20" fill="none" stroke="#4aff9d" stroke-width="1.5"/>
         <circle cx="100" cy="50" r="2" fill="#4aff9d"/>
-        <!-- Frame lines -->
-        <line x1="60" y1="30" x2="60" y2="70" stroke="#8fb5ff" stroke-width="0.5" opacity="0.5"/>
-        <line x1="80" y1="32" x2="80" y2="68" stroke="#8fb5ff" stroke-width="0.5" opacity="0.5"/>
-        <line x1="100" y1="30" x2="100" y2="70" stroke="#8fb5ff" stroke-width="0.5" opacity="0.5"/>
-        <line x1="120" y1="32" x2="120" y2="68" stroke="#8fb5ff" stroke-width="0.5" opacity="0.5"/>
-        <line x1="140" y1="30" x2="140" y2="70" stroke="#8fb5ff" stroke-width="0.5" opacity="0.5"/>
-        <!-- Dimensiones -->
-        <line x1="40" y1="80" x2="160" y2="80" stroke="#8fb5ff" stroke-width="0.5"/>
-        <text x="100" y="92" text-anchor="middle" fill="#8fb5ff" font-size="8" font-family="monospace">9.0m</text>
+        <line x1="40" y1="85" x2="160" y2="85" stroke="#8fb5ff" stroke-width="0.5"/>
+        <text x="100" y="97" text-anchor="middle" fill="#8fb5ff" font-size="8" font-family="monospace">9.0m</text>
         <text x="10" y="15" fill="#4aff9d" font-size="6" font-family="monospace">SEC19</text>
         <text x="10" y="22" fill="#8fb5ff" font-size="5" font-family="monospace">A320</text>
     </svg>`,
     
+    // 3. WING LOWER COVER (Basado en la forma de una cubierta de ala)
     wlc: `<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <pattern id="grid-wlc" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -61,26 +61,28 @@ const BLUEPRINTS = {
             </pattern>
         </defs>
         <rect width="200" height="100" fill="url(#grid-wlc)"/>
-        <!-- Wing Lower Cover -->
-        <path d="M 30 50 Q 50 30, 100 35 Q 150 30, 170 50 Q 150 55, 100 52 Q 50 55, 30 50 Z" fill="none" stroke="#4aa3ff" stroke-width="2"/>
+        <path d="M 30 50 
+                 L 170 40 
+                 L 170 60 
+                 L 30 50 Z" 
+              fill="none" stroke="#4aa3ff" stroke-width="2"/>
+        <circle cx="60" cy="50" r="4" fill="none" stroke="#8fb5ff" stroke-width="1"/>
+        <circle cx="95" cy="50" r="4" fill="none" stroke="#8fb5ff" stroke-width="1"/>
+        <circle cx="130" cy="50" r="4" fill="none" stroke="#8fb5ff" stroke-width="1"/>
         <line x1="30" y1="50" x2="170" y2="50" stroke="#4aa3ff" stroke-width="1" stroke-dasharray="3,2"/>
-        <!-- Ribs -->
-        <path d="M 60 35 Q 60 50, 60 52" stroke="#8fb5ff" stroke-width="0.5" opacity="0.6"/>
-        <path d="M 80 33 Q 80 50, 80 53" stroke="#8fb5ff" stroke-width="0.5" opacity="0.6"/>
-        <path d="M 100 35 Q 100 50, 100 52" stroke="#8fb5ff" stroke-width="0.5" opacity="0.6"/>
-        <path d="M 120 33 Q 120 50, 120 53" stroke="#8fb5ff" stroke-width="0.5" opacity="0.6"/>
-        <path d="M 140 35 Q 140 50, 140 52" stroke="#8fb5ff" stroke-width="0.5" opacity="0.6"/>
         <circle cx="100" cy="50" r="2" fill="#4aff9d"/>
-        <!-- Dimensiones -->
-        <line x1="30" y1="70" x2="170" y2="70" stroke="#8fb5ff" stroke-width="0.5"/>
-        <text x="100" y="82" text-anchor="middle" fill="#8fb5ff" font-size="8" font-family="monospace">20.0m</text>
+        <line x1="30" y1="80" x2="170" y2="80" stroke="#8fb5ff" stroke-width="0.5"/>
+        <text x="100" y="92" text-anchor="middle" fill="#8fb5ff" font-size="8" font-family="monospace">20.0m</text>
         <text x="10" y="15" fill="#4aff9d" font-size="6" font-family="monospace">WLC</text>
         <text x="10" y="22" fill="#8fb5ff" font-size="5" font-family="monospace">A330</text>
     </svg>`
 };
 
 // ==================== PIEZAS PREDEFINIDAS ====================
+// ... (El resto del código de CARGO_PARTS y todo lo demás permanece igual)
+
 const CARGO_PARTS = {
+// ... (resto del objeto sin cambios)
     htp: { 
         id: 'htp',
         name: 'HORIZONTAL TAIL PLANE', 
@@ -106,6 +108,9 @@ const CARGO_PARTS = {
         blueprint: BLUEPRINTS.wlc
     }
 };
+
+// ... (El resto del código JavaScript sigue exactamente igual)
+// ...
 
 // ==================== ESTADO ====================
 let state = {
