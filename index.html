@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>AIRBUS – BELUGA OPS</title>
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="screen">
+
+  <header class="header">
+    <div>
+      <div class="airbus">AIRBUS</div>
+      <div class="subtitle">GETAFE · BELUGA OPERATIONS</div>
+    </div>
+    <div class="header-right">
+      <div id="clock" class="clock">00:00:00</div>
+      <button id="editBtn" class="edit-btn">EDITAR</button>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <!-- LEFT PANEL -->
+    <section class="panel left">
+      
+      <!-- ARRIVAL SECTION -->
+      <div class="flight-group">
+        <div class="group-header">
+          <div class="group-indicator arrival-indicator"></div>
+          <h2>ARRIVAL</h2>
+        </div>
+        
+        <div class="flight-field">
+          <label>CALLSIGN</label>
+          <div class="field-value large editable" id="arrival-callsign">BGA123</div>
+        </div>
+
+        <div class="flight-field">
+          <label>ETA</label>
+          <div class="field-value time editable" id="eta">14:35</div>
+        </div>
+
+        <div class="flight-field">
+          <label>AIRPORT</label>
+          <div class="airport-grid">
+            <button class="airport-card active" data-type="arrival" data-code="LEGT">
+              <span class="airport-full">Getafe</span>
+              <span class="airport-iata">LEGT</span>
+            </button>
+            <button class="airport-card" data-type="arrival" data-code="TLS">
+              <span class="airport-full">Toulouse</span>
+              <span class="airport-iata">TLS</span>
+            </button>
+            <button class="airport-card" data-type="arrival" data-code="XFW">
+              <span class="airport-full">Hamburg</span>
+              <span class="airport-iata">XFW</span>
+            </button>
+            <button class="airport-card" data-type="arrival" data-code="CEG">
+              <span class="airport-full">Chester</span>
+              <span class="airport-iata">CEG</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <!-- DEPARTURE SECTION -->
+      <div class="flight-group">
+        <div class="group-header">
+          <div class="group-indicator departure-indicator"></div>
+          <h2>DEPARTURE</h2>
+        </div>
+        
+        <div class="flight-field">
+          <label>CALLSIGN</label>
+          <div class="field-value large editable" id="departure-callsign">BGA456</div>
+        </div>
+
+        <div class="flight-field">
+          <label>ETD</label>
+          <div class="field-value time editable" id="etd">16:00</div>
+        </div>
+
+        <div class="flight-field">
+          <label>AIRPORT</label>
+          <div class="airport-grid">
+            <button class="airport-card active" data-type="departure" data-code="TLS">
+              <span class="airport-full">Toulouse</span>
+              <span class="airport-iata">TLS</span>
+            </button>
+            <button class="airport-card" data-type="departure" data-code="LEGT">
+              <span class="airport-full">Getafe</span>
+              <span class="airport-iata">LEGT</span>
+            </button>
+            <button class="airport-card" data-type="departure" data-code="XFW">
+              <span class="airport-full">Hamburg</span>
+              <span class="airport-iata">XFW</span>
+            </button>
+            <button class="airport-card" data-type="departure" data-code="CEG">
+              <span class="airport-full">Chester</span>
+              <span class="airport-iata">CEG</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATUS -->
+      <div class="status-section">
+        <span class="status-label">STATUS</span>
+        <strong id="status" class="status enroute">EN ROUTE</strong>
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+    </section>
+
+    <!-- MAP -->
+    <section class="panel map">
+      <div id="map"></div>
+      <div class="map-info">
+        <div class="map-stat">
+          <span>ALT</span>
+          <strong class="editable" id="altitude">9,000</strong>
+          <small>m</small>
+        </div>
+        <div class="map-stat">
+          <span>SPD</span>
+          <strong class="editable" id="speed">390</strong>
+          <small>kt</small>
+        </div>
+      </div>
+      <div class="flight-time-info">
+        <div class="time-info-item">
+          <span>ELAPSED</span>
+          <strong id="elapsed-time">00:00</strong>
+        </div>
+        <div class="time-info-item">
+          <span>REMAINING</span>
+          <strong id="remaining-time">01:35</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL -->
+    <section class="panel right">
+      
+      <!-- CARGA SECTION -->
+      <div class="cargo-section">
+        <div class="section-header">
+          <h3>CARGA</h3>
+          <button id="addLoadBtn" class="control-btn add-btn hidden">+ AÑADIR</button>
+        </div>
+
+        <div id="load-container"></div>
+      </div>
+
+      <div class="separator"></div>
+
+      <!-- DESCARGA SECTION -->
+      <div class="cargo-section">
+        <div class="section-header">
+          <h3>DESCARGA</h3>
+          <button id="addUnloadBtn" class="control-btn add-btn hidden">+ AÑADIR</button>
+        </div>
+
+        <div id="unload-container"></div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- PART SELECTOR POPUP -->
+<div id="part-popup" class="popup hidden">
+  <div class="popup-content part-selector">
+    <h3>SELECCIONAR PIEZA</h3>
+    <div class="part-grid">
+      <button class="part-card" data-part="htp">
+        <div class="part-blueprint" id="svg-htp"></div>
+        <div class="part-info">
+          <strong>HORIZONTAL TAIL PLANE</strong>
+          <span>A350 | 18.0 × 3.5 m | 7,000 kg</span>
+        </div>
+      </button>
+      <button class="part-card" data-part="sec19">
+        <div class="part-blueprint" id="svg-sec19"></div>
+        <div class="part-info">
+          <strong>SECTION 19</strong>
+          <span>A320 | 9.0 × 3.0 m | 3,300 kg</span>
+        </div>
+      </button>
+      <button class="part-card" data-part="wlc">
+        <div class="part-blueprint" id="svg-wlc"></div>
+        <div class="part-info">
+          <strong>WING LOWER COVER</strong>
+          <span>A330 | 20.0 × 5.0 m | 12,500 kg</span>
+        </div>
+      </button>
+    </div>
+    <button id="close-part-popup" class="control-btn cancel-btn">CANCELAR</button>
+  </div>
+</div>
+
+<!-- TECLADO VIRTUAL -->
+<div id="keyboard" class="keyboard hidden">
+  <div class="keyboard-display">
+    <input type="text" id="keyboard-input" readonly>
+  </div>
+  <div class="keyboard-keys">
+    <div class="keyboard-row">
+      <button class="key">1</button>
+      <button class="key">2</button>
+      <button class="key">3</button>
+      <button class="key">4</button>
+      <button class="key">5</button>
+      <button class="key">6</button>
+      <button class="key">7</button>
+      <button class="key">8</button>
+      <button class="key">9</button>
+      <button class="key">0</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="key">Q</button>
+      <button class="key">W</button>
+      <button class="key">E</button>
+      <button class="key">R</button>
+      <button class="key">T</button>
+      <button class="key">Y</button>
+      <button class="key">U</button>
+      <button class="key">I</button>
+      <button class="key">O</button>
+      <button class="key">P</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="key">A</button>
+      <button class="key">S</button>
+      <button class="key">D</button>
+      <button class="key">F</button>
+      <button class="key">G</button>
+      <button class="key">H</button>
+      <button class="key">J</button>
+      <button class="key">K</button>
+      <button class="key">L</button>
+      <button class="key">Ñ</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="key">Z</button>
+      <button class="key">X</button>
+      <button class="key">C</button>
+      <button class="key">V</button>
+      <button class="key">B</button>
+      <button class="key">N</button>
+      <button class="key">M</button>
+      <button class="key">,</button>
+      <button class="key">.</button>
+      <button class="key">×</button>
+    </div>
+    <div class="keyboard-row">
+      <button class="key special" id="key-backspace">← BORRAR</button>
+      <button class="key special space" id="key-space">ESPACIO</button>
+      <button class="key special cancel" id="key-cancel">CANCELAR</button>
+      <button class="key special save" id="key-save">✓ GUARDAR</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
